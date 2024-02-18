@@ -1,6 +1,18 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 const Sidebar = () => {
+
+  const isMenuOpen = useSelector(store=>store.app.isMenuOpen)
+  if(!isMenuOpen) return (
+    <div className='text-xs'>
+      <h1 className='p-2 m-2 '>Home</h1>
+      <h1 className='p-2 m-2 '>Shorts</h1>
+      <h1 className='p-2 m-2 '>Subscrition</h1>
+      <h1 className='p-2 m-2 '>You</h1>
+    </div>
+  )
+
   return (
     <div className='p-4  shadow-lg w-52'>
       <h1 className='m-3 cursor-pointer hover:bg-gray-100 rounded-lg'>Home</h1>
