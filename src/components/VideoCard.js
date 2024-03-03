@@ -11,20 +11,24 @@ function formatNumber(number) {
   }
 
 const VideoCard = ({info}) => {
-    console.log(info)
+    // console.log(info)
     const { snippet, statistics } = info;
-    const {title, channelTitle, thumbnails} = snippet;
+    const { channelTitle,  title, thumbnails} = snippet;
     const {viewCount} = statistics;
+    
+
+    // console.log(snippet + statistics)
 
 
-    return (
-    <div className='p-2 m-2 w-72 shadow-lg'>
-        <img alt="thumbnail" className='rounded-lg' src={thumbnails.medium.url}  />
+     return snippet.length===0 ? null : (
+    <div className='p-2  w-72 shadow-lg'>
+        
+        <img alt="thumbnail" className='rounded-lg ' src={thumbnails.medium.url}  />
 
-        <ul>
+        <ul className="">
             <li className='font-bold'>{title}</li>
             <li>{channelTitle}</li>
-            <li>{viewCount}</li>
+           <li>{viewCount}</li>
         </ul>
        
      
