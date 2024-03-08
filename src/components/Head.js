@@ -2,11 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toggleMenu } from "../utils/appSlice";
 import { YOUTUBE_SEARCH_API } from "../utils/constants";
+import SearchIcon from "@mui/icons-material/Search";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
+import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
+import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+
+  const [isFixed, setIsFixed] = useState(false);
+
   console.log(suggestions);
 
   useEffect(() => {
@@ -16,6 +24,19 @@ const Head = () => {
       clearTimeout(timer);
     };
   }, [searchQuery]);
+
+  const handleScroll = () => {
+    const scrollPosition = window.scrollY;
+    setIsFixed(scrollPosition > 0);
+  };
+
+  // Attach the scroll event listener
+  React.useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const getSearchSuggestions = async () => {
     // console.log("API Call made" + " " + searchQuery);
@@ -61,26 +82,22 @@ const Head = () => {
           ></input>
 
           <button className="border h-10 bg-gray-100 border-gray-500 rounded-r-full px-5 py-2">
-            🔍
+            <SearchIcon />
           </button>
-          <button>
-            <img
-              alt="microphone"
-              className="h-6  px-2 mx-2 "
-              src="https://static.vecteezy.com/system/resources/previews/013/658/851/original/mic-microphone-record-speak-clip-art-icon-vector.jpg"
-            />
+          <button className="p-2 mx-2 bg-gray-100 rounded-full">
+            <KeyboardVoiceIcon fontSize="medium" />
           </button>
         </div>
 
         {showSuggestions && (
-          <div className="fixed mx-36   w-[34%] bg-white shadow-2xl rounded-lg">
+          <div className="fixed  mx-36 top-10 my-9 w-[34%] bg-white shadow-2xl rounded-lg">
             <ul className="pt-4">
               {suggestions.map((suggestion) => (
                 <li
                   key={suggestion}
                   className="py-1 px-8  font-semibold hover:bg-gray-100"
                 >
-                  🔍 {suggestion}
+                  <SearchIcon /> {suggestion}
                 </li>
               ))}
             </ul>
@@ -88,22 +105,10 @@ const Head = () => {
         )}
       </div>
 
-      <div className="col-span-1 flex mx-2 my-1">
-        <img
-          className="h-8 "
-          alt="bellIcon"
-          src="https://static.thenounproject.com/png/3750242-200.png"
-        />
-        <img
-          className="h-7 mx-4"
-          alt="bellIcon"
-          src="https://static.vecteezy.com/system/resources/thumbnails/002/359/770/small/bell-icon-free-vector.jpg"
-        />
-        <img
-          className="h-8 "
-          alt="user"
-          src="https://www.iconpacks.net/icons/2/free-user-icon-3296-thumb.png"
-        />
+      <div className="col-span-1 flex mx-2 my-1 justify-around">
+        <VideoCallOutlinedIcon fontSize="large" />
+        <NotificationsNoneOutlinedIcon fontSize="large" />
+        <AccountCircleIcon fontSize="large" />
       </div>
     </div>
   );
