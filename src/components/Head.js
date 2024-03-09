@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu } from "../utils/appSlice";
 import { YOUTUBE_SEARCH_API } from "../utils/constants";
 import SearchIcon from "@mui/icons-material/Search";
@@ -7,45 +7,52 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import KeyboardVoiceIcon from "@mui/icons-material/KeyboardVoice";
 import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
+import store from "../utils/store";
+import { cacheResults } from "../utils/searchSlice";
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const dispatch = useDispatch();
 
-  const [isFixed, setIsFixed] = useState(false);
+  // console.log(suggestions);
+  //read the cache
+  const searchCache = useSelector((store) => store.search);
 
-  console.log(suggestions);
-
+  /**
+   * searchcache= {
+   * "iphone": ["iphone 13", "iphone pro max"]
+   * }
+   */
   useEffect(() => {
     //API call
-    const timer = setTimeout(() => getSearchSuggestions(), 200);
+    const timer = setTimeout(() => {
+      if (searchCache[searchQuery]) {
+        setSuggestions(searchCache[searchQuery]); // if searchQuery is present in store drectly get it from there or else make an api call to fetch it and update the cache
+      } else {
+        getSearchSuggestions();
+      }
+    }, 200);
     return () => {
       clearTimeout(timer);
     };
   }, [searchQuery]);
 
-  const handleScroll = () => {
-    const scrollPosition = window.scrollY;
-    setIsFixed(scrollPosition > 0);
-  };
-
-  // Attach the scroll event listener
-  React.useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   const getSearchSuggestions = async () => {
-    // console.log("API Call made" + " " + searchQuery);
+    console.log("API Call made" + " " + searchQuery);
     const data = await fetch(YOUTUBE_SEARCH_API + searchQuery);
     const json = await data.json();
     setSuggestions(json[1]);
-  };
 
-  const dispatch = useDispatch();
+    //updating the cache
+    dispatch(
+      cacheResults({
+        //object
+        [searchQuery]: json[1],
+      })
+    );
+  };
 
   const toggleMenuHandler = () => {
     dispatch(toggleMenu());
@@ -90,12 +97,12 @@ const Head = () => {
         </div>
 
         {showSuggestions && (
-          <div className="fixed  mx-36 top-10 my-9 w-[34%] bg-white shadow-2xl rounded-lg">
+          <div className="fixed  mx-36  my-9 w-[34%] bg-white shadow-2xl rounded-lg">
             <ul className="pt-4">
               {suggestions.map((suggestion) => (
                 <li
                   key={suggestion}
-                  className="py-1 px-8  font-semibold hover:bg-gray-100"
+                  className=" px-8  font-semibold hover:bg-gray-100"
                 >
                   <SearchIcon /> {suggestion}
                 </li>
