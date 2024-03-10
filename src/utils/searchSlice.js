@@ -7,6 +7,8 @@ const searchSlice = createSlice({
     cacheResults: (state, action) => {
       // state = { ...action.payload, ...state }; //read js ES6 spread operator
       state = Object.assign(state, action.payload);
+      //Object.assign(target, sourceObj1, sourceObj2, ...);
+      //The Object.assign() method allows you to copy all enumerable own properties from one or more source objects to a target object, and return the target object
     },
   },
 });
