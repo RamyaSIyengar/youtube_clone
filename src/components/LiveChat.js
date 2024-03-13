@@ -17,7 +17,6 @@ const LiveChat = () => {
 
       dispatch(
         addMessage({
-          avatar: Avatar,
           name: username(),
           message: generateMessage(),
         })
@@ -30,7 +29,7 @@ const LiveChat = () => {
 
   return (
     <>
-      <div className="  mx-1 p-2   mt-5 border border-black h-[600px] w-full bg-gray-100 rounded-lg overflow-y-scroll flex flex-col-reverse">
+      <div className="  mx-1 p-2   mt-5 border border-black h-[550px] w-full bg-gray-100 rounded-lg overflow-y-scroll flex flex-col-reverse">
         <div className=" ">
           {chatMessages.map((chatMessage, index) => (
             <ChatMessage

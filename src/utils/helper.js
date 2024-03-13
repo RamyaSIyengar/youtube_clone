@@ -15,3 +15,15 @@ export const generateMessage = () => {
   const randomIndex = Math.floor(Math.random() * messages.length);
   return messages[randomIndex];
 };
+
+export const formatNumber = (num) => {
+  if (Math.abs(num) < 999) {
+    return num;
+  } else if (Math.abs(num) < 1e6) {
+    return (num / 1e3).toFixed(1) + "K";
+  } else if (Math.abs(num) < 1e9) {
+    return (num / 1e6).toFixed(1) + "M";
+  } else {
+    return (num / 1e9).toFixed(1) + "B";
+  }
+};

@@ -1,6 +1,5 @@
 import React from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { Avatar } from "react-lorem-ipsum";
 
 const ChatMessage = ({ name, message }) => {
   return (
