@@ -4,6 +4,7 @@ import VideoCard from "./VideoCard";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setVideoContent } from "../utils/videoSlice";
+import Shimmer from "./Shimmer";
 
 const VideoContainer = () => {
   const [videos, setVideos] = useState([]);
@@ -28,7 +29,7 @@ const VideoContainer = () => {
 
   return (
     <div className=" w-full m-2">
-      <div className=" m-8   flex flex-wrap ">
+      <div className=" m-8 flex flex-wrap ">
         {videos.map((video) => (
           <Link
             to={"/watch?v=" + video.id}

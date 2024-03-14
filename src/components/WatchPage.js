@@ -59,11 +59,11 @@ const WatchPage = () => {
           className="w-12 my-4 ml-4 h-12  rounded-full"
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDof-q38vc7Z7_hke2gXzbzrPHEkO25JaIdQ&s"
         />
-        <p className="my-3 py-2 font-semibold text-xl ">
+        <p className="my-3 py-3 px-2 font-semibold text-xl ">
           {selectedVideo?.video?.snippet?.channelTitle}
         </p>
 
-        <button className="p-2 m-2 bg-black text-white rounded-s-3xl rounded-e-3xl">
+        <button className="p-4 m-4 ml-12 bg-black text-white rounded-s-3xl rounded-e-3xl">
           Subscribe
         </button>
         <div>

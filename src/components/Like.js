@@ -29,7 +29,7 @@ const Like = ({ selectedVideo }) => {
   };
 
   return (
-    <div className="flex justify-between p-2 m-2 ml-[27rem]">
+    <div className="flex justify-between p-2 m-2 ml-[20rem]">
       {/* <div className="flex col-span-1 font-bold text-gray-800">
         {formatNumber(viewCount)}Views
       </div> */}
